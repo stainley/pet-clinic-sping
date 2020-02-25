@@ -147,6 +147,12 @@
                 <version>3.7.0.1746</version>
             </plugin>
 
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.5</version>
+            </plugin>
+
             <!--<plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -229,11 +235,11 @@
                  Cobertura is a free Java tool that calculates the percentage of code accessed by tests.
                  It can be used to identify which parts of your Java program are lacking test coverage.
             -->
-            <plugin>
+            <!--<plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
                 <version>2.5.2</version>
-            </plugin>
+            </plugin>-->
         </plugins>
     </reporting>
 
