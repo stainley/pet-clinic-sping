@@ -71,26 +71,25 @@ pipeline {
             }
         }
 
-        stage('Unit Tests') {
-           when {
+     stage('Unit Tests') {
+        when {
             anyOf { branch 'master'; branch 'develop' }
-           }
-           agent {
+        }
+        agent {
             docker {
-             image 'maven:3.6.0-jdk-8-alpine'
-             args '-v /root/.m2/repository:/root/.m2/repository'
-             reuseNode true
+                image 'maven:3.6.0-jdk-8-alpine'
+                args '-v /root/.m2/repository:/root/.m2/repository'
+                reuseNode true
             }
-           }
-           steps {
+        }
+        steps {
             sh 'mvn test'
-           }
-           post {
+        }
+        post {
             always {
-             junit 'target/surefire-reports/**/*.xml'
+                junit 'target/surefire-reports/**/*.xml'
             }
         }
      }
-
 
 }
