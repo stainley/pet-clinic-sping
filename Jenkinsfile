@@ -176,7 +176,8 @@ pipeline {
              steps {
                 //sh " mvn sonar:sonar -Dsonar.host.url=$SONARQUBE_URL:$SONARQUBE_PORT"
                 withSonarQubeEnv('sonarqube') {
-                    sh 'mvn clean verify -Psonar-test sonar:sonar'
+                    //sh 'mvn clean verify -Psonar-test sonar:sonar'
+                    sh 'mvn clean verify sonar:sonar'
                 }
                 timeout(time: 10, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
