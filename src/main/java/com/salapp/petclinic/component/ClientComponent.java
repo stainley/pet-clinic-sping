@@ -9,7 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class ClientComponent {
 
-    public int total(int suma, int sumb) {
-        return suma + sumb;
+
+    public int sumTwoValue(int value1, int value2) {
+        return 0;
     }
 }

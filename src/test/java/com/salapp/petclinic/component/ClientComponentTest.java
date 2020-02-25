@@ -18,7 +18,10 @@ public class ClientComponentTest {
 
     @Test
     public void totalTest() {
-        int total = clientComponent.total(3, 2);
+        int value1 = 3;
+        int value2 = 2;
+
+        int total = clientComponent.sumTwoValue(value1, value2);
         Assertions.assertEquals(5, total);
     }
 }
