@@ -17,7 +17,8 @@ public class ClientComponentTest {
     ClientComponent clientComponent;
 
     @Test
-    public void testSum() {
-        Assertions.assertEquals(5, clientComponent.total(3, 2));
+    public void totalTest() {
+        int total = clientComponent.total(3, 2);
+        Assertions.assertEquals(5, total);
     }
 }
