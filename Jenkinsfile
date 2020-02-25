@@ -163,6 +163,9 @@ pipeline {
              }
             }
             stage('SonarQube') {
+            environment {
+                scannerHome = tool 'SonarQube Scanner'
+            }
              agent {
               docker {
                image 'maven:3.6.0-jdk-8-alpine'
@@ -171,17 +174,22 @@ pipeline {
               }
              }
              steps {
-              sh " mvn sonar:sonar -Dsonar.host.url=$SONARQUBE_URL:$SONARQUBE_PORT"
+                //sh " mvn sonar:sonar -Dsonar.host.url=$SONARQUBE_URL:$SONARQUBE_PORT"
+                withSonarQubeEnv('sonarqube') {
+                    sh 'mvn clean verify -Psonar-test sonar:sonar'
+                }
+                timeout(time: 10, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
              }
             }
            }
-           post {
-            always {
-             // using warning next gen plugin
-             recordIssues aggregatingResults: true, tools: [javaDoc(), checkStyle(pattern: '**/target/checkstyle-result.xml'), findBugs(pattern: '**/target/findbugsXml.xml', useRankAsPriority: true), pmdParser(pattern: '**/target/pmd.xml')]
+                post {
+                    always {
+                    // using warning next gen plugin
+                    recordIssues aggregatingResults: true, tools: [javaDoc(), checkStyle(pattern: '**/target/checkstyle-result.xml'), findBugs(pattern: '**/target/findbugsXml.xml', useRankAsPriority: true), pmdParser(pattern: '**/target/pmd.xml')]
+                }
             }
-           }
-          }
-
+        }
     }
 }
