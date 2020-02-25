@@ -26,9 +26,8 @@
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 
-        <sonar.junit.reportPaths>${project.basedir}/../target/surefire-reports</sonar.junit.reportPaths>
-        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../target/surefire-reports
-        </sonar.coverage.jacoco.xmlReportPaths>
+        <!--<sonar.junit.reportPaths>${project.basedir}/../target/surefire-reports</sonar.junit.reportPaths>-->
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco-aggregate/jacoco-resources/</sonar.coverage.jacoco.xmlReportPaths>
 
         <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
 
@@ -113,6 +112,7 @@
                                 <phase>process-test-classes</phase>
                                 <goals>
                                     <goal>prepare-agent</goal>
+                                    <goal>report-aggregate</goal>
                                 </goals>
                                 <configuration>
                                     <destFile>${sonar.jacoco.reportPath}</destFile>
