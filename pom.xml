@@ -21,6 +21,7 @@
 
         <sonar.language>java</sonar.language>
         <sonar.source>src</sonar.source>
+        <sonar.scm.provider>git</sonar.scm.provider>
 
         <sonar.exclusions>
             **/PetClinicApplication.java,
