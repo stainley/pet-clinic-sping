@@ -17,8 +17,12 @@
     <properties>
         <java.version>1.8</java.version>
         <surefire.skip>false</surefire.skip>
-        <sonar.source>src</sonar.source>
+        <sonar.host.url>http://minexsoft.com:9000</sonar.host.url>
+
         <sonar.language>java</sonar.language>
+        <sonar.source>src</sonar.source>
+        <!--
+
         <jacoco.version>0.8.5</jacoco.version>
         <sonar-jacoco-listeners.version>1.4</sonar-jacoco-listeners.version>
         <sonar.exclusions/>
@@ -26,10 +30,10 @@
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 
-        <!--<sonar.junit.reportPaths>${project.basedir}/../target/surefire-reports</sonar.junit.reportPaths>-->
+        &lt;!&ndash;<sonar.junit.reportPaths>${project.basedir}/../target/surefire-reports</sonar.junit.reportPaths>&ndash;&gt;
         <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco-aggregate/jacoco-resources/</sonar.coverage.jacoco.xmlReportPaths>
 
-        <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
+        <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>-->
 
     </properties>
 
@@ -60,6 +64,59 @@
     <profiles>
         <profile>
             <id>sonar-test</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>3.0.0-M4</version>
+                        <configuration>
+                            <!--<argLine>${surefireArgLine} -Xmx1024m -noverify</argLine>-->
+                            <argLine>${surefireArgLine} </argLine>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.sonarsource.scanner.maven</groupId>
+                        <artifactId>sonar-maven-plugin</artifactId>
+                        <version>3.7.0.1746</version>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>0.8.5</version>
+                        <executions>
+                            <!-- Prepare agent for measuring unit tests-->
+                            <execution>
+                                <id>prepare-unit-test</id>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                                <configuration>
+                                    <append>true</append>
+                                    <destFile>${sonar.jacoco.reportPath}</destFile>
+                                    <propertyName>surefireArgLine</propertyName>
+                                </configuration>
+                            </execution>
+
+                            <execution>
+                                <id>post-unit-test</id>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <!--<profiles>
+        <profile>
+            <id>sonar-test</id>
             <properties>
                 <sonar.host.url>http://minexsoft.com:9000</sonar.host.url>
             </properties>
@@ -71,7 +128,7 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
                             <argLine>${jacoco.agent.ut.arg}</argLine>
-                            <!-- Specify to generate mapping between tests and covered code -->
+                            &lt;!&ndash; Specify to generate mapping between tests and covered code &ndash;&gt;
                             <properties>
                                 <property>
                                     <name>Listener</name>
@@ -87,15 +144,15 @@
                         <version>3.0.0-M3</version>
                         <configuration>
                             <argLine>-Xmx1024m -XX:MaxPermSize=256m ${jacoco.agent.it.arg}</argLine>
-                            <!-- Specific to generate mapping between tests and covered code -->
+                            &lt;!&ndash; Specific to generate mapping between tests and covered code &ndash;&gt;
                             <properties>
                                 <property>
                                     <name>listener</name>
                                     <value>org.sonar.java.jacoco.JUnitListener</value>
                                 </property>
                             </properties>
-                            <!-- Let's put failsafe reports with surefire to have access to tests
-                                failures/success reports in sonar -->
+                            &lt;!&ndash; Let's put failsafe reports with surefire to have access to tests
+                                failures/success reports in sonar &ndash;&gt;
                             <reportsDirectory>${project.build.directory}/surefire-reports
                             </reportsDirectory>
                         </configuration>
@@ -105,8 +162,8 @@
                         <artifactId>jacoco-maven-plugin</artifactId>
                         <version>${jacoco.version}</version>
                         <executions>
-                            <!-- Prepares a variable, jacoco.agent.ut.arg, that contains the info
-                                to be passed to the JVM hosting the code being tested. -->
+                            &lt;!&ndash; Prepares a variable, jacoco.agent.ut.arg, that contains the info
+                                to be passed to the JVM hosting the code being tested. &ndash;&gt;
                             <execution>
                                 <id>prepare-ut-agent</id>
                                 <phase>process-test-classes</phase>
@@ -120,8 +177,8 @@
                                     <append>true</append>
                                 </configuration>
                             </execution>
-                            <!-- Prepares a variable, jacoco.agent.it.arg, that contains the info
-                                to be passed to the JVM hosting the code being tested. -->
+                            &lt;!&ndash; Prepares a variable, jacoco.agent.it.arg, that contains the info
+                                to be passed to the JVM hosting the code being tested. &ndash;&gt;
                             <execution>
                                 <id>prepare-it-agent</id>
                                 <phase>pre-integration-test</phase>
@@ -147,7 +204,7 @@
                 </dependency>
             </dependencies>
         </profile>
-    </profiles>
+    </profiles>-->
 
     <build>
         <plugins>
@@ -185,18 +242,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>3.1.1</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.sonarsource.scanner.maven</groupId>
-                <artifactId>sonar-maven-plugin</artifactId>
-                <version>3.7.0.1746</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.5</version>
             </plugin>
 
             <!--<plugin>
