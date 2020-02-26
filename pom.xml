@@ -23,7 +23,8 @@
         <sonar.source>src</sonar.source>
 
         <sonar.exclusions>
-            **/PetClinicApplication.java
+            **/PetClinicApplication.java,
+            **/model/**
         </sonar.exclusions>
 
         <!--
