@@ -21,8 +21,12 @@
 
         <sonar.language>java</sonar.language>
         <sonar.source>src</sonar.source>
-        <!--
 
+        <sonar.exclusions>
+            **/PetClinicApplication.java
+        </sonar.exclusions>
+
+        <!--
         <jacoco.version>0.8.5</jacoco.version>
         <sonar-jacoco-listeners.version>1.4</sonar-jacoco-listeners.version>
         <sonar.exclusions/>
