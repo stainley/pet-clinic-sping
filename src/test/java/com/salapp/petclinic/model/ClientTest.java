@@ -1,5 +1,6 @@
 package com.salapp.petclinic.model;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 /**
@@ -10,4 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class ClientTest {
 
 
+    @Test
+    public void clientModel(){
+
+    }
 }
