@@ -177,8 +177,8 @@ pipeline {
              agent {
               docker {
                image 'maven:3.6.0-jdk-8-alpine'
-               args '-v /volume1/@docker/volumes/jenkins/_data/.m2/repository:/root/.m2/repository'
                //args "-v /root/.m2/repository:/root/.m2/repository"
+               args '-v /volume1/@docker/volumes/jenkins/_data/.m2/repository:/root/.m2/repository' // Only for Docker on Synolgy
                reuseNode true
               }
              }
