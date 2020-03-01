@@ -137,98 +137,6 @@
         </profile>
     </profiles>
 
-    <!--<profiles>
-        <profile>
-            <id>sonar-test</id>
-            <properties>
-                <sonar.host.url>http://minexsoft.com:9000</sonar.host.url>
-            </properties>
-
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <argLine>${jacoco.agent.ut.arg}</argLine>
-                            &lt;!&ndash; Specify to generate mapping between tests and covered code &ndash;&gt;
-                            <properties>
-                                <property>
-                                    <name>Listener</name>
-                                    <value>org.sonar.java.jacoco.JUnitListener</value>
-                                </property>
-                            </properties>
-                            <testFailureIgnore>true</testFailureIgnore>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-failsafe-plugin</artifactId>
-                        <version>3.0.0-M3</version>
-                        <configuration>
-                            <argLine>-Xmx1024m -XX:MaxPermSize=256m ${jacoco.agent.it.arg}</argLine>
-                            &lt;!&ndash; Specific to generate mapping between tests and covered code &ndash;&gt;
-                            <properties>
-                                <property>
-                                    <name>listener</name>
-                                    <value>org.sonar.java.jacoco.JUnitListener</value>
-                                </property>
-                            </properties>
-                            &lt;!&ndash; Let's put failsafe reports with surefire to have access to tests
-                                failures/success reports in sonar &ndash;&gt;
-                            <reportsDirectory>${project.build.directory}/surefire-reports
-                            </reportsDirectory>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.jacoco</groupId>
-                        <artifactId>jacoco-maven-plugin</artifactId>
-                        <version>${jacoco.version}</version>
-                        <executions>
-                            &lt;!&ndash; Prepares a variable, jacoco.agent.ut.arg, that contains the info
-                                to be passed to the JVM hosting the code being tested. &ndash;&gt;
-                            <execution>
-                                <id>prepare-ut-agent</id>
-                                <phase>process-test-classes</phase>
-                                <goals>
-                                    <goal>prepare-agent</goal>
-                                    <goal>report-aggregate</goal>
-                                </goals>
-                                <configuration>
-                                    <destFile>${sonar.jacoco.reportPath}</destFile>
-                                    <propertyName>jacoco.agent.ut.arg</propertyName>
-                                    <append>true</append>
-                                </configuration>
-                            </execution>
-                            &lt;!&ndash; Prepares a variable, jacoco.agent.it.arg, that contains the info
-                                to be passed to the JVM hosting the code being tested. &ndash;&gt;
-                            <execution>
-                                <id>prepare-it-agent</id>
-                                <phase>pre-integration-test</phase>
-                                <goals>
-                                    <goal>prepare-agent</goal>
-                                </goals>
-                                <configuration>
-                                    <destFile>${sonar.jacoco.itReportPath}</destFile>
-                                    <propertyName>jacoco.agent.it.arg</propertyName>
-                                    <append>true</append>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-
-            <dependencies>
-                <dependency>
-                    <groupId>org.sonarsource.java</groupId>
-                    <artifactId>sonar-jacoco-listeners</artifactId>
-                    <version>5.14.0.18788</version>
-                </dependency>
-            </dependencies>
-        </profile>
-    </profiles>-->
-
     <build>
         <plugins>
             <plugin>
@@ -266,27 +174,6 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>3.1.1</version>
             </plugin>
-
-            <!--<plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.5</version>
-                <executions>
-                    <execution>
-                        <id>pre-unit-test</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>post-unit-test</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>-->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -345,15 +232,7 @@
                 <artifactId>maven-surefire-report-plugin</artifactId>
                 <version>2.13</version>
             </plugin>
-            <!--
-                 Cobertura is a free Java tool that calculates the percentage of code accessed by tests.
-                 It can be used to identify which parts of your Java program are lacking test coverage.
-            -->
-            <!--<plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>cobertura-maven-plugin</artifactId>
-                <version>2.5.2</version>
-            </plugin>-->
+
         </plugins>
     </reporting>
 
