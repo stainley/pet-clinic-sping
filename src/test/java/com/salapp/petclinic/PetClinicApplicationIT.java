@@ -2,6 +2,7 @@ package com.salapp.petclinic;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 /**
@@ -12,8 +13,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class PetClinicApplicationIT {
 
+    @Autowired
+    PetClinicApplication petClinicApplication;
+
     @Test
     public void sayHello(){
-        Assertions.assertEquals("Hello", "Hello");
+        Assertions.assertNotNull(petClinicApplication);
     }
 }
