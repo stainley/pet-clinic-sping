@@ -23,7 +23,7 @@ public class Client {
     @Id
     @GeneratedValue
     private final Long id = null;
-    private String clientName;
+    private String name;
     private String clientStatus;
 
 
