@@ -4,10 +4,7 @@ package com.salapp.petclinic.services;
 import com.salapp.petclinic.dto.ClientRequest;
 import com.salapp.petclinic.model.Client;
 import com.salapp.petclinic.repository.ClientRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,7 +13,8 @@ import java.util.List;
  * @since 3/1/20.
  */
 
-@RestController("/api")
+@RestController()
+@RequestMapping("/api")
 public class ClientServices {
 
     ClientRepository clientRepository;
