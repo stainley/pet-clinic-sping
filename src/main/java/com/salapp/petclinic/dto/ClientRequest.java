@@ -1,7 +1,6 @@
 package com.salapp.petclinic.dto;
 
 import com.salapp.petclinic.model.Client;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ClientRequest {
 
-    public Client client;
+    private Client client;
 
     public ClientRequest() {
     }
@@ -20,11 +19,11 @@ public class ClientRequest {
         this.client = client;
     }
 
-    public void setName(String name) {
-        client.setName(name);
-    }
-
     public Client getClient() {
         return this.client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }

@@ -1,5 +1,6 @@
 package com.salapp.petclinic.services;
 
+import com.salapp.petclinic.dto.ClientRequest;
 import com.salapp.petclinic.model.Client;
 import com.salapp.petclinic.repository.ClientRepository;
 import org.junit.jupiter.api.Assertions;
@@ -36,10 +37,13 @@ public class ClientServiceTest {
         Client client = new Client();
         //ClientRequest createClientRequest = new ClientRequest();
         client.setName("Test Name");
+
+        ClientRequest clientRequest = new ClientRequest(client);
         Assertions.assertNotNull(client);
 
+
         when(clientRepository.save(any(Client.class))).thenReturn(new Client());
-        Client clientCreated = clientServices.save(client);
+        Client clientCreated = clientServices.save(clientRequest);
         //String expectedValue = "Test Name";
         //Assertions.assertEquals(expectedValue, clientCreated.getName());
     }
