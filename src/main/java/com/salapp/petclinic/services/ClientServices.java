@@ -44,11 +44,7 @@ public class ClientServices {
 
     @DeleteMapping(value = "/client/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public String deleteClient(@PathVariable String id) {
-        try {
-            clientRepository.deleteById(Long.parseLong(id));
-            return "Successful";
-        } catch (Exception e) {
-            return null;
-        }
+        clientRepository.deleteById(Long.parseLong(id));
+        return "Successful";
     }
 }

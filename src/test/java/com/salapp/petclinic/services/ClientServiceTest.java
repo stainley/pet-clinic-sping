@@ -48,4 +48,24 @@ public class ClientServiceTest {
         //Assertions.assertEquals(expectedValue, clientCreated.getName());
     }
 
+    @Test
+    public void show_all_client() {
+        clientServices.getAllClient();
+    }
+
+    @Test
+    public void findClientByName() {
+        String expected = "Test Client";
+        Assertions.assertEquals(expected, clientServices.getClientName("Test Client"));
+    }
+
+    @Test
+    public void delete_client_by_id() throws Exception {
+        try {
+            clientServices.deleteClient("1");
+        } catch (Exception e) {
+            throw new NullPointerException();
+        }
+    }
+
 }
