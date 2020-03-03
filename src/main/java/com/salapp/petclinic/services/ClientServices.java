@@ -4,7 +4,6 @@ package com.salapp.petclinic.services;
 import com.salapp.petclinic.dto.ClientRequest;
 import com.salapp.petclinic.model.Client;
 import com.salapp.petclinic.repository.ClientRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +16,6 @@ import java.util.List;
 
 @RestController()
 @RequestMapping("/api")
-@Slf4j
 public class ClientServices {
 
     ClientRepository clientRepository;
@@ -43,8 +41,7 @@ public class ClientServices {
     }
 
     @DeleteMapping(value = "/client/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String deleteClient(@PathVariable String id) {
-        clientRepository.deleteById(Long.parseLong(id));
-        return "Successful";
+    public void deleteClient(@PathVariable Long id) {
+        //clientRepository.deleteById(Long.parseLong(id));
     }
 }

@@ -62,7 +62,7 @@ public class ClientServiceTest {
     @Test
     public void delete_client_by_id() throws Exception {
         try {
-            clientServices.deleteClient("1");
+            clientServices.deleteClient(11L);
         } catch (Exception e) {
             throw new NullPointerException();
         }
