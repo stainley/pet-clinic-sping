@@ -33,7 +33,7 @@ public class ClientRepositoryTest {
         entityManager.flush();
 
         // When
-        Client found = clientRepository.findClientByClientNameIs(client.getName());
+        Client found = clientRepository.findClientByName(client.getName());
 
         // Then
         assertThat(found.getName()).isEqualTo(client.getName());
