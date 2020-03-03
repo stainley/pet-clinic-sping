@@ -1,6 +1,9 @@
 package com.salapp.petclinic.services;
 
+import com.salapp.petclinic.dto.ClientRequest;
+import com.salapp.petclinic.model.Client;
 import com.salapp.petclinic.repository.ClientRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,9 @@ import java.util.Collections;
 public class ClientServiceIT {
 
     @Autowired
+    ClientServices clientServices;
+
+    @Autowired
     MockMvc mockMvc;
 
     @MockBean
@@ -37,5 +43,21 @@ public class ClientServiceIT {
 
         System.out.println(mvcResult.getResponse());
         Mockito.verify(clientRepository).findAll();
+    }
+
+
+    @Test
+    public void get_client_by_name() {
+        Assertions.assertEquals("Test Client", clientServices.getClientName("Test Client"));
+    }
+
+    @Test
+    public void save_client_by_clientRequest() {
+        Client client = new Client();
+        client.setName("Test Client");
+
+        ClientRequest clientRequest = new ClientRequest(client);
+        clientServices.save(clientRequest);
+
     }
 }

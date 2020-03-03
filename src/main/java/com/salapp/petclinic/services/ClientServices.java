@@ -36,7 +36,6 @@ public class ClientServices {
 
     @PostMapping(path = "/getName", produces = "application/json")
     public String getClientName(@RequestBody String name) {
-        System.out.println("Invoking API!!!");
         return name;
     }
 
