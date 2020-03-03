@@ -3,9 +3,9 @@ package com.salapp.petclinic.services;
 
 import com.salapp.petclinic.model.Client;
 import com.salapp.petclinic.repository.ClientRepository;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author Stainley Lebron
@@ -25,6 +25,17 @@ public class ClientServices {
     @PostMapping("/")
     public Client save(Client client) {
         return clientRepository.save(client);
+    }
+
+    @GetMapping("/all")
+    public List<Client> getAllClient() {
+        return clientRepository.findAll();
+    }
+
+    @PostMapping(path = "/getName", produces = "application/json")
+    public String getClientName(@RequestBody String name) {
+        System.out.println("Invoking API!!!");
+        return name;
     }
 
 }
