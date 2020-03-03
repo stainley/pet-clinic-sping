@@ -27,7 +27,7 @@ public class ClientServices {
     @PostMapping(path = "/createClient", produces = "application/json")
     public Client save(ClientRequest clientRequest) {
         Client client = clientRequest.getClient();
-        return clientRepository.save(client);
+        return clientRepository.saveAndFlush(client);
     }
 
     @GetMapping("/all")
@@ -42,6 +42,6 @@ public class ClientServices {
 
     @DeleteMapping(value = "/client/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public void deleteClient(@PathVariable Long id) {
-        //clientRepository.deleteById(Long.parseLong(id));
+        clientRepository.deleteById(id);
     }
 }
