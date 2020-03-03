@@ -4,6 +4,7 @@ package com.salapp.petclinic.services;
 import com.salapp.petclinic.dto.ClientRequest;
 import com.salapp.petclinic.model.Client;
 import com.salapp.petclinic.repository.ClientRepository;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,4 +40,8 @@ public class ClientServices {
         return name;
     }
 
+    @DeleteMapping(value = "/client/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public void deleteClient(@PathVariable String id) {
+
+    }
 }

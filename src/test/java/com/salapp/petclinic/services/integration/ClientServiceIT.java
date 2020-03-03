@@ -10,6 +10,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 /**
  * @author Stainley Lebron
@@ -34,6 +35,17 @@ public class ClientServiceIT {
         ).andReturn();
 
         System.out.println(mvcResult.getResponse());
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/api/client/{id}", "11")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void delete_client_by_id() throws Exception {
+
     }
 
 }

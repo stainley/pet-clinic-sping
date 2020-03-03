@@ -58,6 +58,6 @@ public class ClientServiceIT {
 
         ClientRequest clientRequest = new ClientRequest(client);
         clientServices.save(clientRequest);
-
     }
+
 }
