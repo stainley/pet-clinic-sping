@@ -10,6 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import javax.validation.valueextraction.ExtractedValue;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -40,7 +42,6 @@ public class ClientServiceTest {
 
         ClientRequest clientRequest = new ClientRequest(client);
         Assertions.assertNotNull(client);
-
 
         when(clientRepository.save(any(Client.class))).thenReturn(new Client());
         Client clientCreated = clientServices.save(clientRequest);

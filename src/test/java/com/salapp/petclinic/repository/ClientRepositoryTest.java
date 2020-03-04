@@ -28,6 +28,7 @@ public class ClientRepositoryTest {
     public void whenFindByName_ThenReturnClient() {
         // Given
         Client client = new Client("Stainley", Status.ACTIVE);
+        if(Status.ACTIVE.getCode() == 0) System.out.println("Client is inactive!");
         entityManager.persist(client);
         entityManager.flush();
 
