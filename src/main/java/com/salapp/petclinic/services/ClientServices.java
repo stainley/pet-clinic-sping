@@ -24,8 +24,14 @@ public class ClientServices {
         this.clientRepository = clientRepository;
     }
 
-    @PostMapping(path = "/createClient", produces = "application/json")
-    public Client save(ClientRequest clientRequest) {
+    /**
+     * Create a new client
+     *
+     * @param clientRequest
+     * @return client
+     */
+    @PostMapping(path = "/client/create", produces = "application/json", consumes = "application/json")
+    public Client save(@RequestBody ClientRequest clientRequest) {
         Client client = clientRequest.getClient();
         return clientRepository.saveAndFlush(client);
     }
@@ -35,12 +41,16 @@ public class ClientServices {
         return clientRepository.findAll();
     }
 
-    @PostMapping(path = "/getName", produces = "application/json")
-    public String getClientName(@RequestBody String name) {
+    @PostMapping(path = "/get/client/{name}", produces = "application/json", consumes = "application/json")
+    public String getClientName(@RequestBody @PathVariable String name) {
         return name;
     }
 
-    @DeleteMapping(value = "/client/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    /**
+     * Delete a client by id
+     * @param id
+     */
+    @DeleteMapping(value = "/delete/client/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public void deleteClient(@PathVariable Long id) {
         clientRepository.deleteById(id);
     }

@@ -1,6 +1,7 @@
 package com.salapp.petclinic.repository;
 
 import com.salapp.petclinic.model.Client;
+import com.salapp.petclinic.util.Status;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -26,7 +27,7 @@ public class ClientRepositoryTest {
     @Test
     public void whenFindByName_ThenReturnClient() {
         // Given
-        Client client = new Client("Stainley", "Active");
+        Client client = new Client("Stainley", Status.ACTIVE);
         entityManager.persist(client);
         entityManager.flush();
 

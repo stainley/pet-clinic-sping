@@ -1,10 +1,18 @@
 package com.salapp.petclinic.services.integration;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.salapp.petclinic.PetClinicApplication;
 import com.salapp.petclinic.dto.ClientRequest;
 import com.salapp.petclinic.model.Client;
 import com.salapp.petclinic.services.ClientServices;
+import com.salapp.petclinic.util.Status;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.util.Lists;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,6 +27,8 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 /**
  * @author Stainley Lebron
@@ -31,6 +41,11 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application-test.properties")
 public class ClientServiceIT {
+    private ObjectMapper objectMapper = new ObjectMapper();
+    private static HttpEntity<ClientRequest> request;
+    private static MultiValueMap<String, ClientRequest> parts = new LinkedMultiValueMap<>();
+    private static JSONObject clientJsonObject;
+    private static HttpHeaders headers;
 
     @Autowired
     private TestRestTemplate testRestTemplate;
@@ -40,6 +55,23 @@ public class ClientServiceIT {
 
     @InjectMocks
     ClientServices clientServices;
+
+    @BeforeAll
+    public static void runBeforeAllTestMethods() throws JSONException {
+        clientJsonObject = new JSONObject();
+        clientJsonObject.put("id", 1);
+        clientJsonObject.put("name", "Test Value");
+
+        headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        Client client = new Client();
+        client.setName("Test Client");
+        client.setStatus(Status.ACTIVE);
+
+        parts.put("clientRequest", Lists.list(new ClientRequest(client)));
+        request = new HttpEntity<>(new ClientRequest(client), headers);
+    }
 
     @Test
     public void contextLoads() throws Exception {
@@ -59,28 +91,19 @@ public class ClientServiceIT {
     }
 
     @Test
-    public void save_client() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+    public void save_client() throws JSONException, JsonProcessingException {
+        String clientResponse = testRestTemplate.postForObject("/api/client/create", request, String.class, parts);
+        JsonNode root = objectMapper.readTree(clientResponse);
 
-        Client client = new Client();
-        client.setName("Test Client");
-
-        HttpEntity<ClientRequest> request = new HttpEntity<>(new ClientRequest(client), headers);
-        Client clientResponse = testRestTemplate.postForObject("/api/createClient", request, Client.class);
-
-        /*Assertions.assertThat(clientResponse.getStatusCode(), is(equalTo(HttpStatus.OK)));
-        Assertions.assertThat(clientResponse.getHeaders().get("Test Client").get(0), is(equalTo("Sucessful")));*/
-
+        org.junit.jupiter.api.Assertions.assertNotNull(root);
+        Assertions.assertThat(root.path("name").asText()).isEqualTo("Test Client");
         Assertions.assertThat(clientResponse).isNotNull();
-        System.out.println("TESTING: " + clientResponse.getId() + " - " + clientResponse.getName());
-
     }
 
     @Test
-    @DisplayName(value = "deleteClientById")
+    @DisplayName(value = "deleteById")
     public void delete_client_by_id() {
-        testRestTemplate.delete("/api/client/{id}", 1L);
+        testRestTemplate.delete("/api/delete/client/{id}", parts.getFirst("clientRequest").getClient().getId());
     }
 
 }

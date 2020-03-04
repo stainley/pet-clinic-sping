@@ -1,5 +1,6 @@
 package com.salapp.petclinic.model;
 
+import com.salapp.petclinic.util.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +26,7 @@ public class Client {
     @GeneratedValue
     private final Long id = null;
     private String name;
-    private String status;
+    private Status status;
 
 
 }
