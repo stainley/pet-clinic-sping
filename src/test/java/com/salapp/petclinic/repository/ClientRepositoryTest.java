@@ -2,10 +2,12 @@ package com.salapp.petclinic.repository;
 
 import com.salapp.petclinic.model.Client;
 import com.salapp.petclinic.util.Status;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -14,30 +16,22 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @since 2/25/20.
  */
 
-
+@RunWith(SpringRunner.class)
 @DataJpaTest
 public class ClientRepositoryTest {
 
     @Autowired
-    TestEntityManager entityManager;
+    private ClientRepository clientRepository;
 
     @Autowired
-    ClientRepository clientRepository;
+    private TestEntityManager entityManager;
 
     @Test
-    public void whenFindByName_ThenReturnClient() {
-        // Given
-        Client client = new Client("Stainley", Status.ACTIVE);
-        if(Status.ACTIVE.getCode() == 0) System.out.println("Client is inactive!");
-        entityManager.persist(client);
-        entityManager.flush();
+    public void getClient_returnClientDetails() throws Exception {
+        Client savedClient = entityManager.persistAndFlush(new Client("Test", Status.ACTIVE));
+        Client client = clientRepository.findClientById(1L);
 
-        // When
-        Client found = clientRepository.findClientByName(client.getName());
-
-        // Then
-        assertThat(found.getName()).isEqualTo(client.getName());
-
+        assertThat(client.getName()).isEqualTo(savedClient.getName());
+        assertThat(client.getStatus()).isEqualTo(savedClient.getStatus());
     }
-
 }

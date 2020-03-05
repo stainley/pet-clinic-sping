@@ -48,7 +48,7 @@ public class ClientServiceIT {
 
     @Test
     public void get_client_by_name() {
-        Assertions.assertEquals("Test Client", clientServices.getClientName("Test Client"));
+        Assertions.assertEquals("Test Client", clientServices.getClientById(1L));
     }
 
     @Test

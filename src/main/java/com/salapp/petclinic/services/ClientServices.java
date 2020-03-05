@@ -4,6 +4,7 @@ package com.salapp.petclinic.services;
 import com.salapp.petclinic.dto.ClientRequest;
 import com.salapp.petclinic.model.Client;
 import com.salapp.petclinic.repository.ClientRepository;
+import com.salapp.petclinic.util.Status;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,13 +42,15 @@ public class ClientServices {
         return clientRepository.findAll();
     }
 
-    @PostMapping(path = "/get/client/{name}", produces = "application/json", consumes = "application/json")
-    public String getClientName(@RequestBody @PathVariable String name) {
-        return name;
+    @GetMapping(path = "/client/find/{id}", produces = "application/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Client getClientById(@RequestBody @PathVariable Long id) {
+        return new Client("Test", Status.ACTIVE);
     }
 
     /**
      * Delete a client by id
+     *
      * @param id
      */
     @DeleteMapping(value = "/delete/client/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

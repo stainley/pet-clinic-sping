@@ -20,9 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -101,9 +99,16 @@ public class ClientServiceIT {
     }
 
     @Test
-    @DisplayName(value = "deleteById")
-    public void delete_client_by_id() {
+    @DisplayName(value = "delete_client_by_id")
+    public void deleteClientById() {
         testRestTemplate.delete("/api/delete/client/{id}", parts.getFirst("clientRequest").getClient().getId());
+    }
+
+    @Test
+    @DisplayName(value = "find_client_by_id")
+    public void findClientById() {
+        ResponseEntity<String> response = testRestTemplate.getForEntity("/api/client/find/{id}", String.class, parts.getFirst("clientRequest").getClient().getId());
+        Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
 }
