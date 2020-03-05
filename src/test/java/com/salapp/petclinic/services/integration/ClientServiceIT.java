@@ -84,18 +84,4 @@ public class ClientServiceIT {
         testRestTemplate.delete("/api/delete/client/{id}", parts.getFirst("clientRequest").getClient().getId());
     }
 
-    @Test
-    @DisplayName(value = "find_client_by_id")
-    public void findClientById() {
-
-        // Act
-        ResponseEntity<Client> response = testRestTemplate.getForEntity("/api/client/find/1L", Client.class, parts);
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-
-        //assertThat(response.getBody().getStatus()).isEqualTo(Status.ACTIVE);
-        //assertThat(response.getBody().getName()).isEqualTo("Test");
-
-    }
-
 }

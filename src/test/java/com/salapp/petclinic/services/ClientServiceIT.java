@@ -20,19 +20,19 @@ import java.util.Collections;
  * @author Stainley Lebron
  * @since 3/2/20.
  */
-@WebMvcTest
+
 public class ClientServiceIT {
 
-    @Autowired
+
     ClientServices clientServices;
 
-    @Autowired
+
     MockMvc mockMvc;
 
-    @MockBean
+
     ClientRepository clientRepository;
 
-    @Test
+
     public void contextLoad() throws Exception {
 
         Mockito.when(clientRepository.findAll()).thenReturn(Collections.emptyList());
@@ -46,12 +46,12 @@ public class ClientServiceIT {
     }
 
 
-    @Test
+
     public void get_client_by_name() {
         Assertions.assertEquals("Test Client", clientServices.getClientById(1L));
     }
 
-    @Test
+
     public void save_client_by_clientRequest() {
         Client client = new Client();
         client.setName("Test Client");
