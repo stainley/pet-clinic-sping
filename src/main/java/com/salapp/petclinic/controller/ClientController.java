@@ -17,9 +17,8 @@ public class ClientController {
         this.clientService = clientService;
     }
 
-    @GetMapping(value = "/get/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public Client getClient(@RequestBody @PathVariable Long id) {
+    @GetMapping(value = "/get/{id}", produces = "application/json")
+    public Client getClient(@PathVariable Long id) {
         return clientService.getClientDetail(id);
     }
 

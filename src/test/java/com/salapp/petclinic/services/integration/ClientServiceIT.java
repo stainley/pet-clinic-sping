@@ -8,7 +8,6 @@ import com.salapp.petclinic.dto.ClientRequest;
 import com.salapp.petclinic.model.Client;
 import com.salapp.petclinic.services.ClientServices;
 import com.salapp.petclinic.util.Status;
-import org.assertj.core.api.Assertions;
 import org.assertj.core.util.Lists;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,16 +16,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Stainley Lebron
@@ -36,29 +33,27 @@ import org.springframework.util.MultiValueMap;
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         classes = PetClinicApplication.class
 )
-@AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application-test.properties")
 public class ClientServiceIT {
+
     private ObjectMapper objectMapper = new ObjectMapper();
     private static HttpEntity<ClientRequest> request;
     private static MultiValueMap<String, ClientRequest> parts = new LinkedMultiValueMap<>();
-    private static JSONObject clientJsonObject;
     private static HttpHeaders headers;
 
     @Autowired
     private TestRestTemplate testRestTemplate;
 
-    @Autowired
-    MockMvc mockMvc;
 
     @InjectMocks
     ClientServices clientServices;
 
     @BeforeAll
     public static void runBeforeAllTestMethods() throws JSONException {
-        clientJsonObject = new JSONObject();
+        JSONObject clientJsonObject = new JSONObject();
         clientJsonObject.put("id", 1);
         clientJsonObject.put("name", "Test Value");
+        clientJsonObject.put("status", Status.ACTIVE);
 
         headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -68,25 +63,10 @@ public class ClientServiceIT {
         client.setStatus(Status.ACTIVE);
 
         parts.put("clientRequest", Lists.list(new ClientRequest(client)));
+
         request = new HttpEntity<>(new ClientRequest(client), headers);
     }
 
-    @Test
-    public void contextLoads() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(
-                MockMvcRequestBuilders.get("/api/all/")
-                        .accept(MediaType.APPLICATION_JSON)
-        ).andReturn();
-
-        System.out.println(mvcResult.getResponse());
-
-        /*mockMvc.perform(
-                MockMvcRequestBuilders.delete("/api/client/{id}", 1)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk());
-        */
-    }
 
     @Test
     public void save_client() throws JSONException, JsonProcessingException {
@@ -94,8 +74,8 @@ public class ClientServiceIT {
         JsonNode root = objectMapper.readTree(clientResponse);
 
         org.junit.jupiter.api.Assertions.assertNotNull(root);
-        Assertions.assertThat(root.path("name").asText()).isEqualTo("Test Client");
-        Assertions.assertThat(clientResponse).isNotNull();
+        assertThat(root.path("name").asText()).isEqualTo("Test Client");
+        assertThat(clientResponse).isNotNull();
     }
 
     @Test
@@ -107,8 +87,15 @@ public class ClientServiceIT {
     @Test
     @DisplayName(value = "find_client_by_id")
     public void findClientById() {
-        ResponseEntity<String> response = testRestTemplate.getForEntity("/api/client/find/{id}", String.class, parts.getFirst("clientRequest").getClient().getId());
-        Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        // Act
+        ResponseEntity<Client> response = testRestTemplate.getForEntity("/api/client/find/1L", Client.class, parts);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        //assertThat(response.getBody().getStatus()).isEqualTo(Status.ACTIVE);
+        //assertThat(response.getBody().getName()).isEqualTo("Test");
+
     }
 
 }
