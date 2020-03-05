@@ -1,7 +1,5 @@
 package com.salapp.petclinic.util;
 
-import com.sun.xml.internal.ws.developer.Serialization;
-
 /**
  * Contain the status code
  */
