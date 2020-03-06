@@ -199,10 +199,19 @@
                 <configuration>
                     <skip>${surefire.skip}</skip>
                     <includes>
-                        <include>**/Test*</include>
-                        <include>**/IT*</include>
+                        <include>**/*Test*.java</include>
+                        <include>**/*IT*.java</include>
                     </includes>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
