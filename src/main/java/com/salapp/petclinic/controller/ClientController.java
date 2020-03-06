@@ -7,6 +7,7 @@ import com.salapp.petclinic.services.ClientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -42,5 +43,11 @@ public class ClientController {
     @GetMapping(path = "/getByName/{name}", consumes = "application/json", produces = "application/json")
     public Client getClientByName(@PathVariable String name) {
         return clientService.getClientByName(name);
+    }
+
+
+    @DeleteMapping(value = "/delete/client/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public void deleteClient(@PathVariable Long id) {
+        clientService.deleteById(id);
     }
 }

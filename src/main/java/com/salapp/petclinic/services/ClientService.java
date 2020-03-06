@@ -35,4 +35,8 @@ public class ClientService {
             throw new ClientNotFoundException();
         }
     }
+
+    public void deleteById(Long id) {
+        clientRepository.deleteById(id);
+    }
 }

@@ -1,5 +1,6 @@
 package com.salapp.petclinic.services;
 
+import com.salapp.petclinic.dto.ClientRequest;
 import com.salapp.petclinic.exception.ClientNotFoundException;
 import com.salapp.petclinic.model.Client;
 import com.salapp.petclinic.repository.ClientRepository;
@@ -12,15 +13,16 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatObject;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.any;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ClientServicesTest {
 
     @Mock
     private ClientRepository clientRepository;
-
     private ClientService clientService;
 
 
@@ -46,4 +48,34 @@ public class ClientServicesTest {
 
         clientService.getClientDetail(1L);
     }
+
+    @Test(expected = ClientNotFoundException.class)
+    public void getClientDetailByName_whenClientIsNull() {
+        clientService.getClientByName(null);
+    }
+
+    @Test
+    public void createClient() {
+        clientService.saveClient(new ClientRequest(any()));
+    }
+
+    @Test
+    public void getClientByName() {
+        given(clientService.getClientByName("Test")).willReturn(new Client("Test", Status.ACTIVE));
+        assertThat(clientService.getClientByName("Test")).isEqualTo(new Client("Test", Status.ACTIVE));
+
+    }
+
+    @Test(expected = ClientNotFoundException.class)
+    public void getClientDetail() {
+        given(clientService.getClientDetail(anyLong())).willReturn(new Client("Test", Status.ACTIVE));
+        assertThat(clientRepository.findClientById(1L)).isEqualTo(new Client("Test", Status.ACTIVE));
+    }
+
+    @Test
+    public void deleteClientById() {
+        clientService.deleteById(anyLong());
+        assertThatObject(clientRepository).isNotNull();
+    }
 }
+
