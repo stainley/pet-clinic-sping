@@ -23,4 +23,9 @@ public class ClientRequest {
         return this.client;
     }
 
+    @Override
+    public String toString() {
+        return "ClientRequest{" +
+                "client=" + client + "\tName: " + client.getName() + "\tStatus: " + client.getStatus() + '}';
+    }
 }

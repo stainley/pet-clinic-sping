@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -41,7 +42,7 @@ public class ClientServicesTest {
 
     @Test(expected = ClientNotFoundException.class)
     public void getClientDetail_whenClientNotFound() {
-        given(clientRepository.findClientById(1L)).willReturn(null);
+        given(clientRepository.findClientById(anyLong())).willReturn(null);
 
         clientService.getClientDetail(1L);
     }

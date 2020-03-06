@@ -1,5 +1,6 @@
 package com.salapp.petclinic.services;
 
+import com.salapp.petclinic.dto.ClientRequest;
 import com.salapp.petclinic.exception.ClientNotFoundException;
 import com.salapp.petclinic.model.Client;
 import com.salapp.petclinic.repository.ClientRepository;
@@ -21,5 +22,17 @@ public class ClientService {
             throw new ClientNotFoundException();
         }
         return client;
+    }
+
+    public void saveClient(ClientRequest clientRequest) {
+        clientRepository.saveAndFlush(clientRequest.getClient());
+    }
+
+    public Client getClientByName(String name) {
+        if (name != null) {
+            return clientRepository.findClientByName(name);
+        } else {
+            throw new ClientNotFoundException();
+        }
     }
 }
