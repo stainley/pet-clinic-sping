@@ -198,6 +198,10 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <skip>${surefire.skip}</skip>
+                    <includes>
+                        <include>**/Test*</include>
+                        <include>**/IT*</include>
+                    </includes>
                 </configuration>
             </plugin>
             <plugin>
