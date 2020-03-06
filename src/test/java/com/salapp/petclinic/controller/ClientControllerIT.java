@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -26,7 +27,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
         classes = PetClinicApplication.class
 )
 @TestPropertySource(locations = "classpath:application-test.properties")
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ClientControllerIT {
 
     @MockBean
@@ -70,7 +70,7 @@ public class ClientControllerIT {
                 .andExpect(MockMvcResultMatchers.status().isOk())
 
         ;
-
-
     }
+
+
 }

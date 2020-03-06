@@ -48,6 +48,7 @@ public class ClientServiceIT {
     @InjectMocks
     ClientServices clientServices;
 
+
     @BeforeAll
     public static void runBeforeAllTestMethods() throws JSONException {
         JSONObject clientJsonObject = new JSONObject();
@@ -83,5 +84,6 @@ public class ClientServiceIT {
     public void deleteClientById() {
         testRestTemplate.delete("/api/delete/client/{id}", parts.getFirst("clientRequest").getClient().getId());
     }
+
 
 }
