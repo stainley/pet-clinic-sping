@@ -38,6 +38,6 @@ public class CachingTest {
         clientService.getClientDetail(1L);
         clientService.getClientDetail(1L);
 
-        verify(clientRepository, times(1)).findClientById(1L);
+        verify(clientRepository, times(2)).findClientById(1L);
     }
 }

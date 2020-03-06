@@ -1,9 +1,10 @@
-package com.salapp.petclinic.services;
+package com.salapp.petclinic;
 
 import com.salapp.petclinic.dto.ClientRequest;
 import com.salapp.petclinic.exception.ClientNotFoundException;
 import com.salapp.petclinic.model.Client;
 import com.salapp.petclinic.repository.ClientRepository;
+import com.salapp.petclinic.services.ClientService;
 import com.salapp.petclinic.util.Status;
 import org.junit.Before;
 import org.junit.Test;
