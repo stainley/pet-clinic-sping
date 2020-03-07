@@ -69,8 +69,6 @@ public class ClientControllerTest {
         when(clientService.getClientDetail(1L)).thenReturn(client).thenReturn(null);
 
         clientController.createClient(new ClientRequest(client));
-
-        verify(clientService, times(1)).saveClient(client));
     }
 
 }
