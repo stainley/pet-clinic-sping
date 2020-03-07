@@ -47,7 +47,13 @@ public class ClientController {
 
 
     @DeleteMapping(value = "/delete/client/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public void deleteClient(@PathVariable Long id) {
-        clientService.deleteById(id);
+    public boolean deleteClient(@PathVariable Long id) {
+        try {
+            clientService.deleteById(id);
+            return true;
+        }catch (Exception e) {
+            return false;
+        }
+
     }
 }

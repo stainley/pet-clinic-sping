@@ -1,4 +1,4 @@
-package com.salapp.petclinic;
+package com.salapp.petclinic.services;
 
 import com.salapp.petclinic.dto.ClientRequest;
 import com.salapp.petclinic.exception.ClientNotFoundException;
@@ -24,7 +24,6 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.any;
 
-//@RunWith(MockitoJUnitRunner.class)
 @RunWith(SpringRunner.class)
 //@WebMvcTest
 public class ClientServicesTest {
